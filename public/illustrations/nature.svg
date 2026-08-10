@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 640 420">
+  <!-- Generator: Adobe Illustrator 30.6.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 109)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+      }
+
+      .st0, .st1 {
+        stroke: #1e1e1e;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 12px;
+      }
+
+      .st1 {
+        fill: #00aa43;
+      }
+
+      .st2 {
+        fill: #1e1e1e;
+        isolation: isolate;
+        opacity: .9;
+      }
+
+      .st3 {
+        fill: #ffd84d;
+      }
+
+      .st4 {
+        fill: #34d661;
+      }
+
+      .st5 {
+        display: none;
+      }
+
+      .st6 {
+        fill: #d7f8df;
+      }
+    </style>
+  </defs>
+  <rect class="st6" width="640" height="420"/>
+  <circle class="st3" cx="510" cy="92" r="72"/>
+  <path class="st4" d="M0,345c120-75,225-81,338-26,94,46,191,40,302-34v135H0v-75Z"/>
+  <path class="st2" d="M0,388c125-43,231-45,338-6,105,38,204,27,302-32v70H0v-32Z"/>
+  <g>
+    <path class="st1" d="M380,77c-147,8-235,81-238,189-2,66,44,110,109,110,111,0,177-103,129-299Z"/>
+    <path class="st0" d="M170,337c51-97,118-167,190-225"/>
+    <path class="st0" d="M229,237l-13-56M279.5,181l-7-58M208,269l-48-14"/>
+    <path class="st0" d="M232.3,243.1l54.8-17.4M212.5,273l7,49M284.5,182l49.9-5"/>
+    <g class="st5">
+      <path class="st0" d="M287,252.4l-13-56M334,208.4l-7-58M266,288.4l-48-14"/>
+    </g>
+  </g>
+</svg>

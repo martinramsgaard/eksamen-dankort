@@ -1,0 +1,57 @@
+/*
+  TOKENS.CSS
+  Samler designets genbrugelige værdier som farver, spacing, radius og skygger.
+  Hvis en central værdi ændres her, slår ændringen igennem i hele løsningen.
+*/
+
+:root {
+  /* Projektets primære farver. */
+  --color-ink: #1e1e1e;
+  --color-red: #e21e27;
+  --color-red-dark: #b51119;
+  --color-green: #34d661;
+  --color-yellow: #ffd84d;
+  --color-gray: #ebebeb;
+  --color-gray-dark: #6b6b6b;
+  --color-cream: #f7f3ed;
+  --color-white: #ffffff;
+
+  /* Maksimal sidebredde og sidemargin. */
+  --page-width: 1280px;
+  --page-padding: 1rem;
+
+  /* Fælles spacing-skala. */
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.25rem;
+  --space-xl: 3.5rem;
+  --space-2xl: 5.5rem;
+
+  /* Afrundinger til små elementer, cards og pill-knapper. */
+  --radius-sm: 0.65rem;
+  --radius-md: 1.1rem;
+  --radius-lg: 1.75rem;
+  --radius-pill: 999px;
+
+  /* To skyggeniveauer til cards og andre hævede flader. */
+  --shadow-card: 0 1.25rem 3.5rem rgba(30, 30, 30, 0.12);
+  --shadow-soft: 0 0.7rem 2rem rgba(30, 30, 30, 0.08);
+
+  /* Systemfont undgår en ekstern fontdownload. */
+  --font-sans: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+  /* Fælles varighed til små hover- og fokusovergange. */
+  --transition: 180ms ease;
+}
+
+/*
+  Fra 800 px øges sidemarginer og sektionsafstande.
+  Det er projektets fælles responsive breakpoint.
+*/
+@media (min-width: 800px) {
+  :root {
+    --page-padding: 2.5rem;
+    --space-xl: 5rem;
+    --space-2xl: 8rem;
+  }
+}

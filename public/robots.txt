@@ -1,0 +1,3 @@
+# Eksamenssitet skal kunne åbnes via link, men ikke indekseres i søgemaskiner.
+User-agent: *
+Disallow: /

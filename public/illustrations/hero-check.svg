@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 644 571">
+  <!-- Generator: Adobe Illustrator 30.6.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 109)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #ebebeb;
+      }
+
+      .st1 {
+        stroke-width: 10px;
+      }
+
+      .st1, .st2, .st3 {
+        stroke: #1e1e1e;
+      }
+
+      .st1, .st4, .st5 {
+        stroke-miterlimit: 4;
+      }
+
+      .st1, .st6 {
+        fill: #e21e27;
+      }
+
+      .st2 {
+        fill: #f7f3ed;
+        stroke-width: 10px;
+      }
+
+      .st2, .st3 {
+        stroke-miterlimit: 4;
+      }
+
+      .st7 {
+        fill: #1e1e1e;
+      }
+
+      .st8 {
+        fill: #ffd84d;
+      }
+
+      .st4 {
+        stroke-linecap: round;
+        stroke-width: 14px;
+      }
+
+      .st4, .st5 {
+        stroke: #fff;
+      }
+
+      .st4, .st5, .st9 {
+        isolation: isolate;
+      }
+
+      .st4, .st9 {
+        opacity: .9;
+      }
+
+      .st10 {
+        fill: #34d661;
+      }
+
+      .st3 {
+        fill: none;
+        stroke-width: 8px;
+      }
+
+      .st5 {
+        opacity: .2;
+        stroke-width: 18px;
+      }
+
+      .st9 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect class="st10" x="40" y="6" width="520" height="520" rx="130" ry="130"/>
+  <circle class="st8" cx="564" cy="80" r="80"/>
+  <circle class="st6" cx="74" cy="497" r="74"/>
+  <g>
+    <rect class="st2" x="138.5" y="147.7" width="500" height="300" rx="48" ry="48" transform="translate(51.9 653) rotate(-84)"/>
+    <rect class="st0" x="218.6" y="159.3" width="345" height="228" rx="26" ry="26" transform="translate(78.4 633.7) rotate(-84)"/>
+    <path class="st7" d="M366,63l93.5,9.8c3.8.4,6.7,3.6,6.3,7.2h0c-.4,3.6-3.8,6.1-7.6,5.7l-93.5-9.8c-3.8-.4-6.7-3.6-6.3-7.2h0c.4-3.6,3.8-6.1,7.6-5.7Z"/>
+    <circle class="st3" cx="367.9" cy="494.6" r="18"/>
+  </g>
+  <g>
+    <rect class="st1" x="56.6" y="199.9" width="390" height="240" rx="34" ry="34" transform="translate(-47 43.3) rotate(-9)"/>
+    <path class="st5" d="M60.2,328.6l375.2-59"/>
+    <rect class="st8" x="92.9" y="270.6" width="62" height="46" rx="8" ry="8" transform="translate(-44.4 23) rotate(-9)"/>
+    <path class="st4" d="M111.2,398.9l114.6-18.1M106.5,369.2l177.8-28.2"/>
+    <circle class="st9" cx="391" cy="356.6" r="28"/>
+  </g>
+</svg>

@@ -1,0 +1,214 @@
+/*
+  GLOBAL.CSS
+  Indeholder fælles styling, som bruges på tværs af flere sider og komponenter.
+  Komponentspecifik styling ligger scoped i den enkelte .astro-fil.
+*/
+
+/* Grundlæggende typografi, farver og minimumsstørrelse for hele siden. */
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--color-white);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+}
+
+/* Skjuler kun utilsigtet vandret overflow fra store dekorative elementer. */
+main {
+  overflow-x: hidden;
+}
+
+/* Fælles understregning og farvearv for almindelige tekstlinks. */
+a {
+  color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+/* Fjerner den blå tap-markering på mobile WebKit-browsere. */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tydelig fælles fokusmarkering for tastaturbrugere. */
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Skip-link ligger uden for skærmen, indtil det modtager tastaturfokus. */
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-ink);
+  font-weight: 700;
+  transform: translateY(-180%);
+  transition: transform var(--transition);
+}
+
+/* Når linket fokuseres, flyttes det ind på skærmen. */
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Fælles container centrerer indhold og begrænser maksimal bredde. */
+.container {
+  width: min(100% - (var(--page-padding) * 2), var(--page-width));
+  margin-inline: auto;
+}
+
+/* Standard lodret afstand til almindelige sektioner. */
+.section {
+  padding-block: var(--space-xl);
+}
+
+/* Større lodret afstand til sidens vigtigste sektioner. */
+.section--large {
+  padding-block: var(--space-2xl);
+}
+
+/* Eyebrow er den lille versaltekst over en større overskrift. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--space-sm);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* Den lille cirkel skaber visuel gentagelse før alle eyebrow-tekster. */
+.eyebrow::before {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+/* Den største displaytitel bruges i heroen og på 404-siden. */
+.display-title {
+  max-width: 12ch;
+  font-size: clamp(3.2rem, 15vw, 8.5rem);
+  font-weight: 800;
+  letter-spacing: -0.075em;
+  line-height: 0.94;
+}
+
+/* Fælles store sektionsoverskrifter. */
+.section-title {
+  max-width: 18ch;
+  font-size: clamp(2.15rem, 8vw, 4.75rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+/* Leadtekst er større end almindelig brødtekst og forklarer sektionens pointe. */
+.lead {
+  max-width: 56ch;
+  font-size: clamp(1.08rem, 3.8vw, 1.35rem);
+  line-height: 1.5;
+}
+
+/* Fælles flex-container til én eller flere CTA-knapper. */
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: var(--space-lg);
+}
+
+/* Grundstilen sikrer ens størrelse, typografi og afrunding på alle knapper. */
+.button {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    transform var(--transition),
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+}
+
+/* En lille lodret bevægelse viser, at knappen kan aktiveres. */
+.button:hover {
+  transform: translateY(-2px);
+}
+
+/* Primær rød CTA. */
+.button--primary {
+  background: var(--color-red);
+  color: var(--color-white);
+}
+
+/* Primær CTA bliver mørkere ved hover. */
+.button--primary:hover {
+  background: var(--color-red-dark);
+}
+
+/* Mørk CTA bruges på lyse eller grønne sektioner. */
+.button--dark {
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+/* Hvid CTA bruges på mørke og røde sektioner. */
+.button--light {
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+/* Outline-varianten arver tekstfarven fra sin sektion. */
+.button--outline {
+  border-color: currentColor;
+  background: transparent;
+  color: inherit;
+}
+
+/* Fælles hvid cardflade til fx korttjekket. */
+.surface-card {
+  border: 1px solid rgba(30, 30, 30, 0.1);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--shadow-soft);
+}
+
+/*
+  Brugere, der har valgt reduceret bevægelse i deres system,
+  får ingen blød scroll eller synlige animationsovergange.
+*/
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

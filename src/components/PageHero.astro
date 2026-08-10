@@ -1,0 +1,79 @@
+---
+// PageHero samler den fælles introstruktur på undersiderne.
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  tone?: "cream" | "red";
+}
+
+// Cream bruges som standard, hvis siden ikke vælger en anden variant.
+const { eyebrow, title, intro, tone = "cream" } = Astro.props;
+
+// Klassen vælger mellem den lyse og den røde variant.
+const heroClass = `page-hero page-hero--${tone}`;
+---
+
+<!-- Fælles hero til undersiderne. -->
+<section class={heroClass}>
+  <div class="container page-hero__inner">
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+    </div>
+
+    <p>{intro}</p>
+  </div>
+</section>
+
+<style>
+  /* Grundafstand omkring alle page heroes. */
+  .page-hero {
+    padding-block: var(--space-xl);
+  }
+
+  /* Lys variant til informationssider. */
+  .page-hero--cream {
+    background: var(--color-cream);
+  }
+
+  /* Rød variant til guidesiden. */
+  .page-hero--red {
+    background: var(--color-red);
+    color: var(--color-white);
+  }
+
+  /* Mobile-first: titel og introduktion står under hinanden. */
+  .page-hero__inner {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* Den store overskrift skaber det primære visuelle hierarki. */
+  .page-hero h1 {
+    max-width: 14ch;
+    font-size: clamp(2.9rem, 12vw, 7rem);
+    font-weight: 850;
+    letter-spacing: -0.07em;
+    line-height: 0.92;
+  }
+
+  /* Introduktionen begrænses i bredde for bedre læsbarhed. */
+  .page-hero__inner > p {
+    max-width: 42ch;
+    align-self: end;
+    font-size: clamp(1.05rem, 3vw, 1.3rem);
+  }
+
+  /* På desktop står titel og introduktion i to kolonner. */
+  @media (min-width: 800px) {
+    .page-hero {
+      padding-block: 6.5rem;
+    }
+
+    .page-hero__inner {
+      grid-template-columns: 1.35fr 0.65fr;
+      align-items: end;
+    }
+  }
+</style>

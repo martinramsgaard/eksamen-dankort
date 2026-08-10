@@ -1,0 +1,59 @@
+/*
+  RESET.CSS
+  Fjerner udvalgte browserstandarder, så layoutet starter ensartet.
+*/
+
+/* Padding og border tæller med i elementets samlede bredde og højde. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Giver blød scroll til ankerlinks som "Tjek dit kort". */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fjerner standardmargener fra de mest anvendte elementer. */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+}
+
+/* Fjerner standard-padding fra lister. */
+ul,
+ol {
+  padding: 0;
+}
+
+/* Medier bliver block-elementer og kan ikke blive bredere end deres container. */
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Formularfelter arver sidens typografi. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Viser en håndmarkør på knapper og summary-elementer. */
+button,
+summary {
+  cursor: pointer;
+}

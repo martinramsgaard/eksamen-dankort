@@ -1,0 +1,64 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+
+// De globale CSS-filer importeres kun én gang i det fælles layout.
+// Rækkefølgen er vigtig: reset først, variabler dernæst og fælles styling til sidst.
+import "../styles/reset.css";
+import "../styles/tokens.css";
+import "../styles/global.css";
+
+// Hver side kan give layoutet sin egen titel og beskrivelse.
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+// Standardværdierne bruges, hvis en side ikke sender egne props.
+const {
+  title = "Er det egentlig Dankort?",
+  description = "Tjek hvilket kort der ligger bag din betaling, se forskellen og find dit næste skridt.",
+} = Astro.props;
+
+// Hvis sidetitlen ikke allerede indeholder Dankort, tilføjes navnet automatisk.
+const fullTitle = title.includes("Dankort") ? title : `${title} | Dankort`;
+---
+
+<!doctype html>
+<html lang="da">
+  <head>
+    <!-- Grundlæggende metadata og responsiv viewport. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Sidens beskrivelse bruges af browsere og søgemaskiner. -->
+    <meta name="description" content={description} />
+
+    <!-- Sitet skal ikke indekseres. -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Browserens UI kan bruge Dankorts røde farve på understøttede enheder. -->
+    <meta name="theme-color" content="#e21e27" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Lokalt favicon. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{fullTitle}</title>
+  </head>
+
+  <body>
+    <!-- Skip-link gør det muligt at springe navigationen over med tastaturet. -->
+    <a class="skip-link" href="#main-content">Spring til indhold</a>
+
+    <!-- Header og footer genbruges på alle sider. -->
+    <Header />
+
+    <!-- Den enkelte sides indhold indsættes her. -->
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>
