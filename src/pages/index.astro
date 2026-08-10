@@ -1,17 +1,443 @@
 ---
+import BenefitCard from "../components/BenefitCard.astro";
+import CardChecker from "../components/CardChecker.astro";
+import MainLayout from "../layouts/MainLayout.astro";
+import { getBenefitStories } from "../lib/benefits";
 
+// Historierne hentes fra Supabase under Astro-buildet.
+// Forsiden viser de tre første publicerede historier.
+const benefits = (await getBenefitStories()).slice(0, 3);
+
+// Bruges til at vise en enkel besked, hvis historierne ikke kan hentes.
+const hasBenefits = benefits.length > 0;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<MainLayout
+  title="Er det egentlig Dankort?"
+  description="Tjek hvilket kort der ligger bag din betaling, se forskellen og find dit næste skridt."
+>
+  <!-- Introducerer sidens spørgsmål og de to vigtigste handlinger. -->
+  <section class="home-hero">
+    <div class="container home-hero__grid">
+      <div class="home-hero__copy">
+        <p class="eyebrow">Dankort Øremærket</p>
+        <h1 class="display-title">Er det egentlig Dankort?</h1>
+        <p class="lead">
+          Du kalder det måske Dankort. Men ved du, hvilket kort der faktisk
+          ligger bag din mobilbetaling?
+        </p>
+
+        <!-- Primær CTA fører til korttjekket; sekundær CTA fører til historierne. -->
+        <div class="button-row">
+          <a class="button button--light" href="#tjek-dit-kort">
+            Tjek dit kort
+          </a>
+
+          <a class="button button--outline" href="/derfor-dankort/">
+            Se forskellen
+          </a>
+        </div>
+
+        <!-- De tre trin opsummerer sidens brugerrejse. -->
+        <ul class="hero-points" aria-label="Tre trin">
+          <li><span>01</span> Tjek mærket</li>
+          <li><span>02</span> Se forskellen</li>
+          <li><span>03</span> Vælg med vilje</li>
+        </ul>
+      </div>
+
+      <!-- Illustrationen er dekorativ; heroens tekst bærer budskabet. -->
+      <div class="home-hero__visual" aria-hidden="true">
+        <img
+          src="/illustrations/hero-check.svg"
+          alt=""
+          width="644"
+          height="571"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Udfordrer antagelsen om, at alle betalingskort er Dankort. -->
+  <section class="reframe section">
+    <div class="container reframe__grid">
+      <p class="reframe__question">“Jeg bruger da allerede Dankort?”</p>
+
+      <div>
+        <p class="eyebrow">Første indsigt</p>
+
+        <h2 class="section-title">
+          Dankort er et kortmærke. Ikke bare et andet ord for betalingskort.
+        </h2>
+
+        <p class="lead">
+          Når kortet gemmer sig i en wallet, bliver mærket let usynligt. Derfor
+          er første skridt at finde ud af, hvilket kort der faktisk ligger bag
+          din betaling.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interaktivt korttjek med HTML-formular og almindelig JavaScript. -->
+  <CardChecker />
+
+  <!-- Viser de tre historier, som hentes fra Supabase. -->
+  <section class="benefits-section section--large">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Se forskellen</p>
+          <h2 class="section-title">Tre grunde. Ingen løftede pegefingre.</h2>
+        </div>
+
+        <p>
+          Fordelene opleves forskelligt. Derfor kan du selv gå videre med den
+          historie, der er mest relevant for dig.
+        </p>
+      </div>
+
+      <!-- Kortene vises, når Supabase har sendt data. -->
+      {
+        hasBenefits && (
+          <div class="benefit-grid">
+            {benefits.map((benefit) => (
+              <BenefitCard benefit={benefit} />
+            ))}
+          </div>
+        )
+      }
+
+      <!-- Enkel besked hvis historierne ikke kan hentes. -->
+      {
+        !hasBenefits && (
+          <div class="data-message" role="status">
+            <h3>Historierne kunne ikke hentes lige nu</h3>
+            <p>Prøv at genindlæse siden om et øjeblik.</p>
+          </div>
+        )
+      }
+
+      <div class="button-row benefit-button-row">
+        <a class="button button--dark" href="/derfor-dankort/">
+          Se alle historier
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opsummerer de tre trin fra opmærksomhed til handling. -->
+  <section class="journey section--large">
+    <div class="container">
+      <p class="eyebrow">Fra vane til aktivt valg</p>
+      <h2 class="section-title">Du behøver ikke vide alt om betalingskort.</h2>
+
+      <ol class="journey__steps">
+        <li>
+          <span>1</span>
+          <div>
+            <h3>Find ud af det</h3>
+            <p>
+              Tjek kortets navn eller logo i wallet, bankapp eller på det
+              fysiske kort.
+            </p>
+          </div>
+        </li>
+
+        <li>
+          <span>2</span>
+          <div>
+            <h3>Se forskellen</h3>
+            <p>
+              Se, hvordan Dankort kan have betydning for natur, butikker og
+              betalingsberedskab.
+            </p>
+          </div>
+        </li>
+
+        <li>
+          <span>3</span>
+          <div>
+            <h3>Vælg med vilje</h3>
+            <p>
+              Behold dit kort eller undersøg Dankort hos banken. Valget er dit.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Afsluttende CTA fører videre til den praktiske guide. -->
+  <section class="final-cta section--large">
+    <div class="container final-cta__inner">
+      <div>
+        <p class="eyebrow">Næste skridt</p>
+
+        <h2 class="section-title">
+          Har du ikke Dankort — eller er du stadig i tvivl?
+        </h2>
+      </div>
+
+      <div>
+        <p class="lead">
+          Guiden viser, hvor du kan kigge, og hvordan du spørger banken uden at
+          dele følsomme oplysninger.
+        </p>
+
+        <a class="button button--light" href="/saadan-faar-du-dankort/">
+          Se den enkle guide
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Heroens mørke baggrund skaber stærk kontrast til den hvide tekst. */
+  .home-hero {
+    padding-block: var(--space-xl);
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  /* Mobile-first: tekst og illustration står i én kolonne. */
+  .home-hero__grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* Tekstområdet centreres lodret, når desktop-grid senere aktiveres. */
+  .home-hero__copy {
+    align-self: center;
+  }
+
+  /* Skaber luft mellem hovedoverskrift og forklarende tekst. */
+  .home-hero .lead {
+    margin-top: var(--space-md);
+  }
+
+  /* Illustrationen centreres i sit gridområde. */
+  .home-hero__visual {
+    display: grid;
+    place-items: center;
+  }
+
+  /* Maksimal bredde forhindrer, at SVG'en bliver for dominerende. */
+  .home-hero__visual img {
+    width: min(100%, 40rem);
+  }
+
+  /* De tre trin vises som fleksible chips. */
+  .hero-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: var(--space-lg);
+    list-style: none;
+  }
+
+  /* Hver chip har en diskret transparent ramme. */
+  .hero-points li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  /* Trinnummeret fremhæves med den grønne accentfarve. */
+  .hero-points span {
+    color: var(--color-green);
+  }
+
+  /* Reframe-sektionen bruger en varm, lys baggrund. */
+  .reframe {
+    background: var(--color-cream);
+  }
+
+  /* Mobile-first: citat og forklaring står under hinanden. */
+  .reframe__grid {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  /* Citatets ovale form fremhæver spørgsmålet. */
+  .reframe__question {
+    max-width: 14ch;
+    padding: 2.75rem 3rem;
+    border: 3px solid var(--color-ink);
+    border-radius: 50%;
+    font-size: clamp(2rem, 9vw, 4rem);
+    font-weight: 850;
+    letter-spacing: -0.06em;
+    line-height: 0.98;
+    transform: rotate(-4deg);
+  }
+
+  /* Overskriften skalerer lidt roligere ved mindre desktopbredder. */
+  .reframe .section-title {
+    font-size: clamp(2.15rem, 6vw, 4.75rem);
+  }
+
+  /* Forklaringens leadtekst får afstand fra overskriften. */
+  .reframe .lead {
+    margin-top: var(--space-md);
+  }
+
+  /* Historiesektionen beholder en neutral hvid baggrund. */
+  .benefits-section {
+    background: var(--color-white);
+  }
+
+  /* Sektionens overskrift og intro organiseres som et lille grid. */
+  .section-heading {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Den korte introtekst begrænses i bredde. */
+  .section-heading > p {
+    max-width: 42ch;
+    align-self: end;
+  }
+
+  /* Mobile-first: fordelene står i én kolonne. */
+  .benefit-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* Besked ved manglende Supabase-data. */
+  .data-message {
+    padding: 1.25rem;
+    border: 2px dashed var(--color-ink);
+    border-radius: var(--radius-md);
+    background: var(--color-cream);
+  }
+
+  /* Beskedens titel adskilles fra forklaringen. */
+  .data-message h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  /* Knappen under kortene centreres. */
+  .benefit-button-row {
+    justify-content: center;
+  }
+
+  /* De tre trin adskilles med en lysegrå baggrund. */
+  .journey {
+    background: var(--color-gray);
+  }
+
+  /* Mobile-first: de tre trin står under hinanden. */
+  .journey__steps {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: var(--space-lg);
+    list-style: none;
+  }
+
+  /* Hvert trin samler nummer og forklaring i et hvidt card. */
+  .journey__steps li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    padding: 1.2rem;
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  /* Trinnummeret vises som en rød cirkel. */
+  .journey__steps > li > span {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-red);
+    color: var(--color-white);
+    font-weight: 850;
+  }
+
+  /* Trinoverskriften adskilles let fra brødteksten. */
+  .journey__steps h3 {
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+  }
+
+  /* Den afsluttende røde sektion samler sidens vigtigste næste skridt. */
+  .final-cta {
+    background: var(--color-red);
+    color: var(--color-white);
+  }
+
+  /* Mobile-first: overskrift og handling står under hinanden. */
+  .final-cta__inner {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* CTA-knappen får afstand fra leadteksten. */
+  .final-cta .button {
+    margin-top: var(--space-md);
+  }
+
+  /* Desktoplayoutet aktiveres ved undervisningens fælles breakpoint på 800 px. */
+  @media (min-width: 800px) {
+    /* Heroen får mere højde og centreres lodret. */
+    .home-hero {
+      display: grid;
+      min-height: 47rem;
+      align-items: center;
+    }
+
+    /* Tekst og illustration fordeles i to kolonner. */
+    .home-hero__grid {
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+    }
+
+    /* Citat og indsigt fordeles i to kolonner. */
+    .reframe__grid {
+      grid-template-columns: 0.75fr 1.25fr;
+      align-items: center;
+    }
+
+    /* Historiesektionens titel og intro fordeles i to kolonner. */
+    .section-heading {
+      grid-template-columns: 1.4fr 0.6fr;
+      align-items: end;
+    }
+
+    /* De tre historier vises side om side. */
+    .benefit-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* De tre trin vises side om side. */
+    .journey__steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* På desktop står trinnummer og tekst lodret inde i hvert card. */
+    .journey__steps li {
+      grid-template-columns: 1fr;
+      align-content: start;
+      min-height: 15rem;
+      padding: 1.6rem;
+    }
+
+    /* Slut-CTA'en fordeles i to kolonner. */
+    .final-cta__inner {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: end;
+    }
+  }
+</style>

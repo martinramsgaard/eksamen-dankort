@@ -1,0 +1,107 @@
+---
+import { getBenefitIllustration } from "../lib/benefitVisuals";
+import type { BenefitStory } from "../types/benefit";
+
+// BenefitCard bruges på forsiden, listesiden og under relaterede historier.
+interface Props {
+  benefit: BenefitStory;
+}
+
+const { benefit } = Astro.props;
+
+// Illustrationens filsti bestemmes af historiens kategori.
+const illustration = getBenefitIllustration(benefit.category);
+---
+
+<!-- Hele kortet er klikbart og fører til den dynamiske historieside. -->
+<article class="benefit-card">
+  <a href={`/derfor-dankort/${benefit.slug}/`}>
+    <!-- Den visuelle del indeholder den lokale illustration. -->
+    <div class="benefit-card__visual">
+      <img src={illustration} alt="" width="640" height="420" />
+    </div>
+
+    <!-- Tekstdelen hentes fra Supabase. -->
+    <div class="benefit-card__copy">
+      <p>{benefit.eyebrow}</p>
+      <h2>{benefit.title}</h2>
+      <span>Læs historien <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>
+
+<style>
+  /* Yderrammen samler illustration og tekst som ét card. */
+  .benefit-card {
+    min-width: 0;
+    border: 1px solid rgba(30, 30, 30, 0.1);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition);
+  }
+
+  /* Hover giver en diskret visuel feedback. */
+  .benefit-card:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-5px);
+  }
+
+  /* Linket fylder hele kortet og deler det i illustration og tekst. */
+  .benefit-card > a {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Samme billedformat giver illustrationerne ens højde på alle kort. */
+  .benefit-card__visual {
+    position: relative;
+    aspect-ratio: 640 / 420;
+    overflow: hidden;
+  }
+
+  /* Illustrationerne fylder hele visualfeltet uden forvrængning. */
+  .benefit-card__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Tekstdelen bruger grid, så CTA'en kan ligge stabilt nederst. */
+  .benefit-card__copy {
+    display: grid;
+    align-content: start;
+    padding: 1.35rem;
+  }
+
+  /* Eyebrow-teksten fungerer som en lille kategorioverskrift. */
+  .benefit-card__copy p {
+    margin-bottom: 0.55rem;
+    color: var(--color-gray-dark);
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  /* Kortets hovedoverskrift har tydeligt visuelt hierarki. */
+  .benefit-card__copy h2 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.45rem, 5vw, 2rem);
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+
+  /* CTA-teksten skubbes ned, så kortenes afslutning flugter. */
+  .benefit-card__copy > span {
+    align-self: end;
+    margin-top: auto;
+    font-weight: 850;
+  }
+</style>

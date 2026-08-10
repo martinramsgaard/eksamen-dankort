@@ -1,0 +1,200 @@
+---
+import Brand from "./Brand.astro";
+
+// Astro.url.pathname fortæller, hvilken side brugeren står på.
+// Den bruges til at markere det aktive navigationslink med aria-current.
+const pathname = Astro.url.pathname;
+
+// Navigationen oprettes kun ét sted og genbruges på mobil og desktop.
+const links = [
+  { href: "/", label: "Forside" },
+  { href: "/derfor-dankort/", label: "Derfor Dankort" },
+  { href: "/saadan-faar-du-dankort/", label: "Sådan får du det" },
+];
+
+// Funktionen returnerer true, når et link matcher den aktuelle URL.
+function isActive(href: string): boolean {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return pathname.startsWith(href);
+}
+---
+
+<!-- Headeren indeholder brand, desktopnavigation og en native mobilmenu. -->
+<header class="site-header">
+  <div class="container site-header__inner">
+    <Brand />
+
+    <!-- Desktopnavigationen bliver synlig fra 800 px. -->
+    <nav class="desktop-nav" aria-label="Primær navigation">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="header-cta" href="/#tjek-dit-kort">Tjek dit kort</a>
+    </nav>
+
+    <!--
+      details/summary giver en mobilmenu uden ekstra JavaScript.
+      Det reducerer kompleksiteten og bevarer tastaturbetjening.
+    -->
+    <details class="mobile-nav">
+      <summary>Menu</summary>
+      <nav aria-label="Mobilnavigation">
+        <ul>
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+          <li><a href="/#tjek-dit-kort">Tjek dit kort</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* Headerens yderramme skaber en tydelig overgang til sidens indhold. */
+  .site-header {
+    position: relative;
+    z-index: 20;
+    border-bottom: 1px solid rgba(30, 30, 30, 0.1);
+    background: rgba(255, 255, 255, 0.96);
+  }
+
+  /* Det indre flex-layout placerer brand til venstre og navigation til højre. */
+  .site-header__inner {
+    display: flex;
+    min-height: 4.6rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* Desktopnavigationen er skjult i mobile-first grundlayoutet. */
+  .desktop-nav {
+    display: none;
+  }
+
+  /* Mobilmenuens details-element er referencepunkt for dropdownen. */
+  .mobile-nav {
+    position: relative;
+  }
+
+  /* summary er den synlige menu-knap. */
+  .mobile-nav summary {
+    padding: 0.65rem 0.9rem;
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    font-weight: 800;
+    list-style: none;
+  }
+
+  /* Fjerner browserens standardsymbol i browsere, der bruger WebKit. */
+  .mobile-nav summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Dropdown-navigationen placeres under menu-knappen. */
+  .mobile-nav nav {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    right: 0;
+    width: min(18rem, calc(100vw - 2rem));
+    padding: 0.75rem;
+    border: 1px solid rgba(30, 30, 30, 0.12);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Begge navigationslister vises uden standard bullets. */
+  .mobile-nav ul,
+  .desktop-nav ul {
+    list-style: none;
+  }
+
+  /* Mobilnavigationens links får store, tydelige klikflader. */
+  .mobile-nav a {
+    display: block;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.7rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  /* Hover og aktiv side bruger samme visuelle markering. */
+  .mobile-nav a:hover,
+  .mobile-nav a[aria-current="page"] {
+    background: var(--color-gray);
+  }
+
+  /* Fra 800 px skifter headeren til desktopnavigation. */
+  @media (min-width: 800px) {
+    /* Mobilmenuen er ikke nødvendig på større skærme. */
+    .mobile-nav {
+      display: none;
+    }
+
+    /* Desktopnavigationen placerer links og CTA på samme linje. */
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    /* Linklisten bliver vandret. */
+    .desktop-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Hvert desktop-link får en tydelig, afrundet klikflade. */
+    .desktop-nav ul a {
+      display: block;
+      padding: 0.7rem 0.8rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    /* Aktiv side og hover fremhæves med lysegrå baggrund. */
+    .desktop-nav ul a:hover,
+    .desktop-nav ul a[aria-current="page"] {
+      background: var(--color-gray);
+    }
+
+    /* Den primære CTA får Dankorts røde accentfarve. */
+    .header-cta {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-pill);
+      background: var(--color-red);
+      color: var(--color-white);
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+  }
+</style>

@@ -1,0 +1,255 @@
+---
+import PageHero from "../components/PageHero.astro";
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout
+  title="Sådan undersøger du Dankort"
+  description="En enkel guide til at tjekke kortet bag din betaling og undersøge mulighederne hos din bank."
+>
+  <!-- Introducerer siden som en sikker og enkel guide. -->
+  <PageHero
+    eyebrow="Vælg med vilje"
+    title="Fra tvivl til et enkelt næste skridt."
+    intro="Guiden hjælper dig med at undersøge kortet, uden at du skal dele kortnummer, login eller andre følsomme oplysninger."
+    tone="red"
+  />
+
+  <!-- Tre konkrete trin fra korttjek til kontakt med banken. -->
+  <section class="guide section--large">
+    <div class="container">
+      <ol class="guide__steps">
+        <!-- Første trin viser, hvor kortoplysningerne kan findes. -->
+        <li>
+          <span>1</span>
+          <div>
+            <p class="eyebrow">Find kortet</p>
+            <h2>Tjek wallet, bankapp eller fysisk kort.</h2>
+            <p>
+              Se efter ordet <strong>Dankort</strong> eller Dankort-logoet. I en mobil
+              wallet kan oplysningerne være mere begrænsede, så sammenlign eventuelt
+              med bankappen eller det fysiske kort.
+            </p>
+          </div>
+        </li>
+
+        <!-- Andet trin forklarer forskellen mellem kortnavnene. -->
+        <li>
+          <span>2</span>
+          <div>
+            <p class="eyebrow">Forstå navnet</p>
+            <h2>Visa/Dankort indeholder også Dankort.</h2>
+            <p>
+              Hvis kortet tydeligt hedder Visa/Dankort, indgår Dankort. Hvis der
+              kun står Visa, Mastercard eller et andet mærke, er det
+              sandsynligvis ikke Dankort. Banken kan altid bekræfte korttypen.
+            </p>
+          </div>
+        </li>
+
+        <!-- Tredje trin guider videre til bankens officielle kanaler. -->
+        <li>
+          <span>3</span>
+          <div>
+            <p class="eyebrow">Spørg sikkert</p>
+            <h2>Brug bankens officielle kanal.</h2>
+            <p>
+              Undersøg kortmuligheder i bankappen eller på bankens officielle
+              website. Kontakt banken gennem sikker besked eller det
+              telefonnummer, banken selv oplyser. Del aldrig kortnummer eller
+              login på denne side.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Brugeren vælger selv sit næste skridt. -->
+  <section class="decision section">
+    <div class="container decision__grid">
+      <div>
+        <p class="eyebrow">Dit valg</p>
+        <h2 class="section-title">Du bestemmer næste skridt.</h2>
+      </div>
+
+      <div>
+        <p class="lead">
+          Når du kender dine muligheder, bestemmer du selv, hvad du vil gøre. Du
+          kan undersøge Dankort, spørge banken eller vælge at beholde dit
+          nuværende kort.
+        </p>
+
+        <div class="button-row">
+          <a class="button button--dark" href="/#tjek-dit-kort">
+            Tag korttjekket
+          </a>
+
+          <a class="button button--outline" href="/derfor-dankort/">
+            Se forskellen
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ bruger native details/summary og kræver derfor ikke JavaScript. -->
+  <section class="faq section--large">
+    <div class="container faq__grid">
+      <div>
+        <p class="eyebrow">FAQ</p>
+        <h2 class="section-title">Det korte svar på de naturlige spørgsmål.</h2>
+      </div>
+
+      <div class="faq__list">
+        <details>
+          <summary>Kan siden se mit betalingskort?</summary>
+          <p>
+            Nej. Korttjekket gemmer eller sender ingen kortdata. Det bruger kun
+            dine valgte svar i browseren til at vise en vejledende besked.
+          </p>
+        </details>
+
+        <details>
+          <summary>Skal jeg skifte bank for at få Dankort?</summary>
+          <p>
+            Det afhænger af bankens kortudvalg og dine aftaler. Brug bankens
+            officielle kanaler til at undersøge mulighederne.
+          </p>
+        </details>
+
+        <details>
+          <summary>Er et Visa/Dankort et Dankort?</summary>
+          <p>
+            Ja, når Dankort fremgår af kortets navn eller mærkning, indgår
+            Dankort-funktionen. Banken kan bekræfte den præcise korttype.
+          </p>
+        </details>
+
+        <details>
+          <summary>Kan Dankort bruges i udlandet?</summary>
+          <p>
+            Dankort-delen er knyttet til det danske betalingsmarked. Et
+            kombineret kort kan have en international del. Tjek altid kortets
+            vilkår hos banken.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Guideområdet bruger hvid baggrund, så de lyse cards står tydeligt frem. */
+  .guide {
+    background: var(--color-white);
+  }
+
+  /* Mobile-first: trinene står under hinanden. */
+  .guide__steps {
+    display: grid;
+    gap: 1rem;
+    list-style: none;
+  }
+
+  /* Hvert trin samler nummer og forklaring i et card. */
+  .guide__steps li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(30, 30, 30, 0.1);
+    border-radius: var(--radius-lg);
+    background: var(--color-cream);
+  }
+
+  /* Trinnummeret fremhæves i en grøn cirkel. */
+  .guide__steps > li > span {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-green);
+    font-size: 1.15rem;
+    font-weight: 900;
+  }
+
+  /* Trinoverskriften begrænses i bredde og bruger responsiv skriftstørrelse. */
+  .guide__steps h2 {
+    max-width: 22ch;
+    margin-bottom: 0.8rem;
+    font-size: clamp(1.65rem, 5vw, 2.6rem);
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+
+  /* Brødteksten i hvert trin får en læsbar maksimal linjelængde. */
+  .guide__steps p:last-child {
+    max-width: 58ch;
+  }
+
+  /* Den grønne sektion fremhæver brugerens næste valg. */
+  .decision {
+    background: var(--color-green);
+  }
+
+  /* Mobile-first: overskrift og handlingsdel står under hinanden. */
+  .decision__grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* FAQ-sektionen adskilles med lysegrå baggrund. */
+  .faq {
+    background: var(--color-gray);
+  }
+
+  /* Mobile-first: FAQ-intro og spørgsmål står under hinanden. */
+  .faq__grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* Spørgsmålene får ens mellemrum. */
+  .faq__list {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  /* Hvert details-element fremstår som et hvidt card. */
+  .faq details {
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+  }
+
+  /* summary er den klikbare overskrift på hvert spørgsmål. */
+  .faq summary {
+    padding: 1.1rem 1.2rem;
+    font-weight: 850;
+    list-style-position: inside;
+  }
+
+  /* Svaret får luft og en diskret mørkegrå tekstfarve. */
+  .faq details p {
+    max-width: 60ch;
+    padding: 0 1.2rem 1.2rem;
+    color: #484848;
+  }
+
+  /* Desktoplayoutet aktiveres ved 800 px. */
+  @media (min-width: 800px) {
+    /* Trinnummeret får en fast kolonne, mens teksten bruger resten. */
+    .guide__steps li {
+      grid-template-columns: 5rem 1fr;
+      padding: 2rem;
+    }
+
+    /* Beslutningssektion og FAQ fordeles begge i to kolonner. */
+    .decision__grid,
+    .faq__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

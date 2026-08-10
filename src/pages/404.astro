@@ -1,0 +1,35 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Siden blev ikke fundet">
+  <!-- Enkel fejlside, som fører tilbage til forsiden. -->
+  <section class="not-found section--large">
+    <div class="container not-found__inner">
+      <p class="eyebrow">404</p>
+
+      <h1 class="display-title">Det var ikke det kort.</h1>
+
+      <p class="lead">Siden findes ikke, men du kan gå tilbage til forsiden.</p>
+
+      <a class="button button--primary" href="/"> Gå til forsiden </a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Sektionen fylder det meste af skærmen og centrerer indholdet lodret. */
+  .not-found {
+    display: grid;
+    min-height: 65vh;
+    align-items: center;
+    background: var(--color-cream);
+  }
+
+  /* Indholdet står i én kolonne med ens afstand. */
+  .not-found__inner {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-md);
+  }
+</style>

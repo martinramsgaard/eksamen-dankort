@@ -1,0 +1,149 @@
+---
+import BenefitCard from "../../components/BenefitCard.astro";
+import PageHero from "../../components/PageHero.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getBenefitStories } from "../../lib/benefits";
+
+// Henter alle publicerede historier fra Supabase under build.
+const benefits = await getBenefitStories();
+const hasBenefits = benefits.length > 0;
+---
+
+<MainLayout
+  title="Derfor Dankort"
+  description="Se de kollektive værdier bag Dankort: dansk natur, danske butikker og betalingsberedskab."
+>
+  <!-- Fælles undersideshero med sidens emne og introduktion. -->
+  <PageHero
+    eyebrow="Se forskellen"
+    title="Mere end kortet i din wallet."
+    intro="Dit kortvalg handler ikke kun om, hvad du selv får. Se tre forskelle, der kan have betydning for natur, butikker og betalingsberedskab."
+    tone="cream"
+  />
+
+  <!-- De tre historier vises direkte på siden. -->
+  <section class="stories section--large">
+    <div class="container">
+      <div class="stories__heading">
+        <p class="eyebrow">Tre perspektiver</p>
+        <h2 class="section-title">
+          Vælg den historie, der er mest relevant for dig.
+        </h2>
+        <p>
+          Natur, butikker og beredskab viser tre forskellige sider af Dankort.
+          Vælg den historie, du er mest nysgerrig på — eller læs dem alle.
+        </p>
+      </div>
+
+      <!-- Kortene genereres ud fra Supabase-data. -->
+      {
+        hasBenefits && (
+          <div class="stories__grid">
+            {benefits.map((benefit) => (
+              <BenefitCard benefit={benefit} />
+            ))}
+          </div>
+        )
+      }
+
+      <!-- Enkel besked hvis historierne ikke kan hentes. -->
+      {
+        !hasBenefits && (
+          <div class="data-message" role="status">
+            <h3>Historierne kunne ikke hentes lige nu</h3>
+            <p>Prøv at genindlæse siden om et øjeblik.</p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Afslutningen lader brugeren vælge sit eget næste skridt. -->
+  <section class="choice-note section">
+    <div class="container choice-note__inner">
+      <div>
+        <p class="eyebrow">Dit valg</p>
+        <h2 class="section-title">Vælg med vilje.</h2>
+      </div>
+
+      <div>
+        <p class="lead">
+          Når du kender forskellene, kan du selv beslutte, hvad der betyder
+          noget for dig. Du kan undersøge Dankort, spørge din bank eller beholde
+          det kort, du allerede har.
+        </p>
+        <a class="button button--dark" href="/saadan-faar-du-dankort/">
+          Se næste skridt
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  /* Historiesektionen bruger en neutral hvid baggrund. */
+  .stories {
+    background: var(--color-white);
+  }
+
+  /* Overskrift, forklaring og kort samles med tydelig lodret afstand. */
+  .stories__heading {
+    display: grid;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Den korte forklaring begrænses, så linjerne ikke bliver for lange. */
+  .stories__heading > p:last-child {
+    max-width: 58ch;
+  }
+
+  /* Mobile-first: historierne står i én kolonne. */
+  .stories__grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* Besked hvis historierne ikke kan hentes. */
+  .data-message {
+    padding: 1.25rem;
+    border: 2px dashed var(--color-ink);
+    border-radius: var(--radius-md);
+    background: var(--color-cream);
+  }
+
+  /* Beskedens overskrift får lidt afstand til forklaringen. */
+  .data-message h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  /* Den grønne sektion fremhæver brugerens næste valg. */
+  .choice-note {
+    background: var(--color-green);
+  }
+
+  /* Mobile-first: overskrift og forklaring står under hinanden. */
+  .choice-note__inner {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* Knappen får afstand fra leadteksten. */
+  .choice-note .button {
+    margin-top: var(--space-md);
+  }
+
+  /* På desktop vises historierne og afslutningen i kolonner. */
+  @media (min-width: 800px) {
+    /* Tre lige brede kolonner viser historierne samlet. */
+    .stories__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Overskrift og handlingsdel fordeles i to kolonner. */
+    .choice-note__inner {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: start;
+    }
+  }
+</style>

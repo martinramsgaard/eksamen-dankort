@@ -1,0 +1,6 @@
+# Netlify kører Astros build-script ved hvert push til main.
+[build]
+  command = "npm run build"
+
+  # Astro lægger de færdige statiske filer i dist-mappen.
+  publish = "dist"

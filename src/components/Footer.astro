@@ -1,0 +1,81 @@
+<!-- Footeren afslutter siden med en kort introduktion, navigation og information om korttjekket. -->
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <!-- Kort introduktion til sitet. -->
+    <div>
+      <p class="site-footer__title">Er det egentlig Dankort?</p>
+      <p class="site-footer__text">
+        Bliv klogere på, hvilket kort du bruger, hvad forskellene kan betyde, og
+        hvad du kan gøre som næste skridt.
+      </p>
+    </div>
+
+    <!-- Navigation fra sidens bund. -->
+    <nav aria-label="Footer-navigation">
+      <a href="/">Forside</a>
+      <a href="/derfor-dankort/">Derfor Dankort</a>
+      <a href="/saadan-faar-du-dankort/">Sådan får du det</a>
+    </nav>
+
+    <!-- Information om korttjek og personlige oplysninger. -->
+    <p class="site-footer__note">
+      Du skal ikke indtaste kortnummer, bankoplysninger eller login på siden.
+      Korttjekket bygger kun på dine egne svar.
+    </p>
+  </div>
+</footer>
+
+<style>
+  /* Den mørke baggrund skaber en klar visuel afslutning på siden. */
+  .site-footer {
+    padding-block: var(--space-xl);
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  /* Mobile-first: footerens tre områder står under hinanden. */
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* Sidetitlen får mere vægt end den forklarende tekst. */
+  .site-footer__title {
+    margin-bottom: 0.5rem;
+    font-size: 1.35rem;
+    font-weight: 850;
+  }
+
+  /* De sekundære tekster nedtones med lysegrå farve. */
+  .site-footer__text,
+  .site-footer__note {
+    max-width: 48ch;
+    color: #cfcfcf;
+  }
+
+  /* Footerlinks står i en enkel lodret liste. */
+  .site-footer nav {
+    display: grid;
+    align-content: start;
+    gap: 0.55rem;
+  }
+
+  /* Understregningen følger kun selve linkteksten. */
+  .site-footer nav a {
+    width: fit-content;
+    font-weight: 750;
+  }
+
+  /* Noten er mindre, fordi den er supplerende information. */
+  .site-footer__note {
+    font-size: 0.82rem;
+  }
+
+  /* På desktop fordeles de tre footerområder i kolonner. */
+  @media (min-width: 800px) {
+    .site-footer__grid {
+      grid-template-columns: 1.25fr 0.75fr 1.1fr;
+      align-items: start;
+    }
+  }
+</style>

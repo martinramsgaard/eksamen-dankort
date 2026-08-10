@@ -1,0 +1,571 @@
+<!--
+  Korttjekket er sidens vigtigste JavaScript-interaktion.
+  Det stiller tre vejledende spørgsmål uden at gemme eller sende brugerens svar.
+-->
+<section id="tjek-dit-kort" class="checker-section section--large">
+  <div class="container checker-layout">
+    <!-- Introduktionen forklarer formålet og sikkerheden omkring korttjekket. -->
+    <div class="checker-intro">
+      <p class="eyebrow">Tjek mærket</p>
+      <h2 class="section-title">
+        Hvilket kort ligger egentlig bag din betaling?
+      </h2>
+      <p class="lead">
+        Tre korte spørgsmål hjælper dig med at finde det rigtige sted at tjekke.
+        Vi beder aldrig om kortnummer, bankoplysninger eller login.
+      </p>
+    </div>
+
+    <!--
+      novalidate slår browserens standard-popup fra.
+      I stedet viser JavaScript en kort fejltekst inde i selve flowet.
+    -->
+    <form class="checker surface-card" data-card-checker novalidate>
+      <!-- De tre cirkler viser, hvor langt brugeren er i flowet. -->
+      <ol class="checker__progress" aria-label="Fremgang">
+        <li aria-current="step" data-progress-step>1</li>
+        <li data-progress-step>2</li>
+        <li data-progress-step>3</li>
+      </ol>
+
+      <!-- Trin 1: brugerens mest almindelige betalingsform. -->
+      <div class="checker__step" data-step="0">
+        <fieldset>
+          <legend tabindex="-1">Hvordan betaler du oftest i butikker?</legend>
+
+          <label class="choice">
+            <input type="radio" name="payment" value="mobile" required />
+            <span class="choice__text">
+              <strong>Med mobilen</strong>
+              <small>Apple Pay, Google Pay eller lignende</small>
+            </span>
+          </label>
+
+          <label class="choice">
+            <input type="radio" name="payment" value="card" />
+            <span class="choice__text">
+              <strong>Med fysisk kort</strong>
+              <small>Jeg bruger kortet direkte i terminalen</small>
+            </span>
+          </label>
+
+          <label class="choice">
+            <input type="radio" name="payment" value="both" />
+            <span class="choice__text">
+              <strong>Begge dele</strong>
+              <small>Det skifter efter situationen</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <!-- aria-live gør, at en skærmlæser oplæser en valideringsfejl. -->
+        <p class="checker__error" data-error aria-live="polite"></p>
+
+        <div class="checker__actions checker__actions--end">
+          <button class="button button--dark" type="button" data-next>
+            Fortsæt
+          </button>
+        </div>
+      </div>
+
+      <!-- Trin 2: synligt Dankort-navn eller logo. -->
+      <div class="checker__step" data-step="1" hidden>
+        <fieldset>
+          <legend tabindex="-1">
+            Kan du se Dankort-logoet på kortet eller i bankappen?
+          </legend>
+
+          <label class="choice">
+            <input type="radio" name="logo" value="yes" required />
+            <span class="choice__text">
+              <strong>Ja</strong>
+              <small>Dankort-navnet eller logoet er synligt</small>
+            </span>
+          </label>
+
+          <label class="choice">
+            <input type="radio" name="logo" value="no" />
+            <span class="choice__text">
+              <strong>Nej</strong>
+              <small>Jeg kan kun se Visa, Mastercard eller et andet mærke</small
+              >
+            </span>
+          </label>
+
+          <label class="choice">
+            <input type="radio" name="logo" value="unsure" />
+            <span class="choice__text">
+              <strong>Jeg er i tvivl</strong>
+              <small>Jeg ved ikke, hvor jeg skal kigge</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <p class="checker__error" data-error aria-live="polite"></p>
+
+        <div class="checker__actions">
+          <button class="button button--outline" type="button" data-back>
+            Tilbage
+          </button>
+          <button class="button button--dark" type="button" data-next>
+            Fortsæt
+          </button>
+        </div>
+      </div>
+
+      <!-- Trin 3: kortets konkrete navn. -->
+      <div class="checker__step" data-step="2" hidden>
+        <fieldset>
+          <legend tabindex="-1">Hvad står der på kortet?</legend>
+
+          <label class="choice">
+            <input type="radio" name="cardType" value="visa-dankort" required />
+            <span class="choice__text">
+              <strong>Visa/Dankort eller Dankort</strong>
+              <small>Dankort indgår tydeligt i navnet</small>
+            </span>
+          </label>
+
+          <label class="choice">
+            <input type="radio" name="cardType" value="international" />
+            <span class="choice__text">
+              <strong>Kun Visa, Mastercard eller andet</strong>
+              <small>Jeg kan ikke se ordet Dankort</small>
+            </span>
+          </label>
+
+          <label class="choice">
+            <input type="radio" name="cardType" value="unknown" />
+            <span class="choice__text">
+              <strong>Det ved jeg ikke</strong>
+              <small>Jeg vil gerne have en enkel guide</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <p class="checker__error" data-error aria-live="polite"></p>
+
+        <div class="checker__actions">
+          <button class="button button--outline" type="button" data-back>
+            Tilbage
+          </button>
+          <button class="button button--primary" type="submit">
+            Vis resultat
+          </button>
+        </div>
+      </div>
+
+      <!-- Resultatet erstatter spørgsmålene efter formularens submit. -->
+      <div
+        class="checker__result"
+        data-result
+        hidden
+        aria-live="polite"
+        tabindex="-1"
+      >
+        <p class="eyebrow">Dit resultat</p>
+        <h3 data-result-title></h3>
+        <p data-result-body></p>
+        <p class="checker__tip" data-result-tip></p>
+
+        <div class="checker__actions">
+          <button class="button button--outline" type="button" data-reset>
+            Start forfra
+          </button>
+          <a
+            class="button button--primary"
+            data-result-link
+            href="/saadan-faar-du-dankort/"
+          >
+            Se næste skridt
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Finder den konkrete formular i komponenten.
+  const checker = document.querySelector<HTMLFormElement>(
+    "[data-card-checker]",
+  );
+
+  // Resten af koden kører kun, hvis formularen findes på siden.
+  if (checker) {
+    // Samler de tre trin i den rækkefølge, de står i HTML'en.
+    const steps = Array.from(
+      checker.querySelectorAll<HTMLElement>("[data-step]"),
+    );
+
+    // Samler de tre fremgangscirkler.
+    const progressItems = Array.from(
+      checker.querySelectorAll<HTMLElement>("[data-progress-step]"),
+    );
+
+    // Finder knapperne ud fra deres data-attributter.
+    const nextButtons =
+      checker.querySelectorAll<HTMLButtonElement>("[data-next]");
+    const backButtons =
+      checker.querySelectorAll<HTMLButtonElement>("[data-back]");
+    const resetButton =
+      checker.querySelector<HTMLButtonElement>("[data-reset]");
+
+    // Finder resultatfeltet og de elementer, som senere får indhold.
+    const result = checker.querySelector<HTMLElement>("[data-result]");
+    const resultTitle = checker.querySelector<HTMLElement>(
+      "[data-result-title]",
+    );
+    const resultBody = checker.querySelector<HTMLElement>("[data-result-body]");
+    const resultTip = checker.querySelector<HTMLElement>("[data-result-tip]");
+    const resultLink =
+      checker.querySelector<HTMLAnchorElement>("[data-result-link]");
+
+    // currentStep gemmer nummeret på det synlige trin. Første trin har index 0.
+    let currentStep = 0;
+
+    // Viser ét trin og skjuler de andre.
+    function showStep(stepNumber: number): void {
+      currentStep = stepNumber;
+
+      steps.forEach((step, index) => {
+        step.hidden = index !== currentStep;
+      });
+
+      // aria-current markerer det aktive trin for hjælpemidler.
+      progressItems.forEach((item, index) => {
+        if (index === currentStep) {
+          item.setAttribute("aria-current", "step");
+        } else {
+          item.removeAttribute("aria-current");
+        }
+      });
+
+      // Fokus flyttes til spørgsmålet, så tastatur- og skærmlæserbrugere følger med.
+      const legend =
+        steps[currentStep]?.querySelector<HTMLLegendElement>("legend");
+      legend?.focus();
+    }
+
+    // Kontrollerer, om brugeren har valgt en radioknap i det aktuelle trin.
+    function currentStepHasAnswer(): boolean {
+      const step = steps[currentStep];
+      const selectedAnswer = step?.querySelector<HTMLInputElement>(
+        'input[type="radio"]:checked',
+      );
+      const errorMessage = step?.querySelector<HTMLElement>("[data-error]");
+
+      if (!selectedAnswer) {
+        if (errorMessage) {
+          errorMessage.textContent = "Vælg ét svar for at fortsætte.";
+        }
+        return false;
+      }
+
+      if (errorMessage) {
+        errorMessage.textContent = "";
+      }
+
+      return true;
+    }
+
+    // Hver Fortsæt-knap validerer trinnet og går derefter ét trin frem.
+    nextButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (currentStepHasAnswer()) {
+          showStep(currentStep + 1);
+        }
+      });
+    });
+
+    // Hver Tilbage-knap går ét trin tilbage, men aldrig længere tilbage end trin 0.
+    backButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        showStep(Math.max(0, currentStep - 1));
+      });
+    });
+
+    // Når brugeren vælger et svar, fjernes en eventuel fejltekst med det samme.
+    checker.addEventListener("change", () => {
+      const errorMessage =
+        steps[currentStep]?.querySelector<HTMLElement>("[data-error]");
+
+      if (errorMessage) {
+        errorMessage.textContent = "";
+      }
+    });
+
+    // Submit kører kun på sidste trin og beregner den vejledende besked.
+    checker.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!currentStepHasAnswer() || !result) {
+        return;
+      }
+
+      // FormData læser de valgte radioknapper ud fra deres name-attributter.
+      const formData = new FormData(checker);
+      const payment = String(formData.get("payment") ?? "");
+      const logo = String(formData.get("logo") ?? "");
+      const cardType = String(formData.get("cardType") ?? "");
+
+      // Standardresultatet bruges, når svarene stadig er usikre.
+      let title = "Du er ikke alene om at være i tvivl";
+      let body =
+        "Kortet bag en mobilbetaling er let at overse. Tjek kortets navn i din bankapp, din wallet eller på det fysiske kort.";
+      let tip =
+        "Se efter ordet Dankort eller Dankort-logoet. Del aldrig kortnummer eller login på denne side.";
+      let href = "/saadan-faar-du-dankort/";
+
+      // Et synligt Dankort-logo eller navnet Visa/Dankort peger mod et Dankort.
+      if (logo === "yes" || cardType === "visa-dankort") {
+        title = "Det tyder på, at du bruger Dankort";
+        body =
+          "Du har fundet Dankort-navnet eller logoet. Nu kan du se, hvad kortvalget betyder ud over selve betalingen.";
+        tip =
+          "Din bank kan bekræfte den præcise korttype, hvis oplysningerne i wallet eller bankapp er uklare.";
+        href = "/derfor-dankort/";
+      }
+
+      // Hvis hverken navn eller logo viser Dankort, peger svarene mod et andet kort.
+      if (logo === "no" && cardType === "international") {
+        title = "Det tyder på, at kortet ikke er Dankort";
+        body =
+          "Hvis Dankort-navnet eller logoet ikke fremgår, bruger du sandsynligvis et andet betalingskort.";
+        tip =
+          "Du behøver ikke skifte noget nu. Guiden viser blot, hvordan du kan undersøge mulighederne hos din bank.";
+      }
+
+      // Mobilbetalere får et ekstra konkret råd om, hvor de kan begynde.
+      if (payment === "mobile") {
+        tip +=
+          " Start i din wallet: tryk på kortet og sammenlign oplysningerne med bankappen.";
+      }
+
+      // De beregnede tekster indsættes i resultatfeltet.
+      if (resultTitle) resultTitle.textContent = title;
+      if (resultBody) resultBody.textContent = body;
+      if (resultTip) resultTip.textContent = tip;
+      if (resultLink) resultLink.href = href;
+
+      // Spørgsmål og fremgang skjules, mens resultatet vises.
+      steps.forEach((step) => {
+        step.hidden = true;
+      });
+
+      progressItems.forEach((item) => {
+        item.hidden = true;
+      });
+
+      result.hidden = false;
+      result.focus();
+    });
+
+    // Start forfra nulstiller både svar, resultat og synligt trin.
+    resetButton?.addEventListener("click", () => {
+      checker.reset();
+
+      if (result) {
+        result.hidden = true;
+      }
+
+      progressItems.forEach((item) => {
+        item.hidden = false;
+      });
+
+      showStep(0);
+    });
+  }
+</script>
+
+<style>
+  /* Hele korttjeksektionen bruger grøn som positiv og handlingsorienteret accent. */
+  .checker-section {
+    background: var(--color-green);
+  }
+
+  /* Mobile-first: introduktion og formular står under hinanden. */
+  .checker-layout {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  /* Introduktionen placeres øverst i sin kolonne. */
+  .checker-intro {
+    align-self: start;
+  }
+
+  /* Skaber afstand mellem overskrift og forklarende leadtekst. */
+  .checker-intro .lead {
+    margin-top: var(--space-md);
+  }
+
+  /* Formularens hvide kortflade får indvendig luft. */
+  .checker {
+    padding: 1.1rem;
+  }
+
+  /* Fremgangsindikatoren viser de tre trin vandret. */
+  .checker__progress {
+    display: flex;
+    gap: 0.45rem;
+    margin-bottom: var(--space-lg);
+    list-style: none;
+  }
+
+  /* Hvert trin vises som en lille cirkel. */
+  .checker__progress li {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 2px solid var(--color-ink);
+    border-radius: 50%;
+    font-size: 0.82rem;
+    font-weight: 850;
+  }
+
+  /* Det aktuelle trin udfyldes mørkt. */
+  .checker__progress li[aria-current="step"] {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  /* Browserens standardramme omkring fieldset fjernes. */
+  .checker fieldset {
+    padding: 0;
+    border: 0;
+  }
+
+  /* legend fungerer som hvert trins hovedoverskrift. */
+  .checker legend {
+    max-width: 19ch;
+    margin-bottom: var(--space-md);
+    font-size: clamp(1.6rem, 6vw, 2.6rem);
+    font-weight: 850;
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+
+  /* Hvert svar består af en synlig radioknap og en stor tekstflade. */
+  .choice {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0.8rem;
+    margin-top: 0.7rem;
+  }
+
+  /* Den native radioknap bevares for genkendelighed og tilgængelighed. */
+  .choice input {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 1.05rem;
+    accent-color: var(--color-red);
+  }
+
+  /* Tekstfladen fungerer som den store visuelle klikflade. */
+  .choice__text {
+    display: grid;
+    padding: 1rem;
+    border: 2px solid rgba(30, 30, 30, 0.14);
+    border-radius: var(--radius-md);
+    transition:
+      border-color var(--transition),
+      background var(--transition);
+  }
+
+  /* Hover fremhæver svarmuligheden uden at vælge den. */
+  .choice:hover .choice__text {
+    border-color: var(--color-ink);
+  }
+
+  /* Gør det valgte svar tydeligt. */
+  .choice input:checked + .choice__text {
+    border-color: var(--color-ink);
+    background: var(--color-cream);
+  }
+
+  /* Fokus på radioknappen markeres også omkring den tilhørende tekstflade. */
+  .choice input:focus-visible + .choice__text {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  /* Svarmulighedens overskrift holdes kompakt. */
+  .choice strong {
+    line-height: 1.25;
+  }
+
+  /* Den forklarende undertekst nedtones. */
+  .choice small {
+    margin-top: 0.25rem;
+    color: var(--color-gray-dark);
+    line-height: 1.35;
+  }
+
+  /* Feltet reserverer plads, så layoutet ikke hopper ved en fejl. */
+  .checker__error {
+    min-height: 1.4rem;
+    margin-top: 0.65rem;
+    color: var(--color-red-dark);
+    font-size: 0.86rem;
+    font-weight: 750;
+  }
+
+  /* Handlingsknapperne kan bryde til ny linje på smalle skærme. */
+  .checker__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.7rem;
+    margin-top: var(--space-md);
+  }
+
+  /* På første trin står den eneste knap til højre. */
+  .checker__actions--end {
+    justify-content: flex-end;
+  }
+
+  /* Resultatet får lidt ekstra intern luft. */
+  .checker__result {
+    padding: 0.5rem;
+  }
+
+  /* Resultatoverskriften har høj visuel prioritet. */
+  .checker__result h3 {
+    max-width: 18ch;
+    margin-bottom: var(--space-sm);
+    font-size: clamp(2rem, 7vw, 3.4rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  /* Resultatets brødtekst begrænses for læsbarhed. */
+  .checker__result > p:not(.eyebrow) {
+    max-width: 52ch;
+  }
+
+  /* Det konkrete sikkerhedstip fremhæves i en separat grå boks. */
+  .checker__tip {
+    padding: 0.9rem;
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-md);
+    background: var(--color-gray);
+    font-size: 0.88rem;
+  }
+
+  /* På desktop står introduktion og formular ved siden af hinanden. */
+  @media (min-width: 800px) {
+    .checker-layout {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    /* Den større skærm giver plads til mere padding i formularkortet. */
+    .checker {
+      padding: 2rem;
+    }
+  }
+</style>
