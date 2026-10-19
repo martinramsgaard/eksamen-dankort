@@ -1,5 +1,6 @@
 # Er det egentlig Dankort?
 
+https://eksamen-dankort.netlify.app
 Et digitalt kampagnesite udviklet som 2. semester-eksamensprojekt på Multimediedesign.
 
 Løsningen tager udgangspunkt i spørgsmålet om, hvorvidt unge ved, hvilket betalingskort der faktisk ligger bag deres betaling – særligt når kortet bruges gennem en mobil wallet.
